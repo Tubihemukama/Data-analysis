@@ -28,6 +28,7 @@ if upload is not None:
             frequency_table.columns = ['Category','Frequency']
             frequency_table['Percentage'] = (frequency_table['Frequency']/frequency_table['Frequency'].sum())*100
             frequency_table['Variable'] = var
+            frequency_table = frequency_table[['Variable', 'Category', 'Frequency', 'Percentage']]
             all_tables.append(frequency_table) #Tables appended
             
             # Combine all into one DataFrame
