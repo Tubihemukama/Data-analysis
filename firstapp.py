@@ -6,7 +6,7 @@ upload = st.file_uploader('Upload an Excel File', type=['xlsx'])
 
 if upload is not None:
     dataset = pd.read_excel(upload)
-    st.write(dataset)
+    st.write(dataset.head())
 
     
 
