@@ -3,7 +3,7 @@ import pandas as pd
 
 # Set page configuration FIRST
 st.set_page_config(
-    page_title="My App",
+    page_title="data-help",
     page_icon="🧠",
     layout="wide"
 )
