@@ -1,5 +1,9 @@
+
+
 import streamlit as st
 import pandas as pd
+from io import BytesIO
+
 
 # Set page configuration FIRST
 st.set_page_config(
@@ -8,44 +12,49 @@ st.set_page_config(
     layout="wide"
 )
 
+
+
+
+
 st.title("📊 Excel Data Analyzer")
 
-upload = st.file_uploader("Upload an Excel File", type=["xlsx"])
+
+upload = st.file_uploader('Upload an Excel File', type=['xlsx'])
 
 if upload is not None:
     dataset = pd.read_excel(upload)
-    st.subheader("Preview of Dataset")
     st.write(dataset.head())
 
-    variable_list = dataset.columns
-    numeric_variable_list = dataset.select_dtypes(include="number").columns
-    non_numeric_variable_list = dataset.select_dtypes(include=["object", "string", "category"]).columns
+    
 
-    # Numeric Summary
-    st.subheader("📈 Numeric Variable Summary")
-    def numeric_variables():
+
+
+    variable_list = dataset.columns
+    numeric_variable_list = dataset.select_dtypes(include='number').columns
+    def numeric_varaibles():
         for var in numeric_variable_list:
             mean_var = dataset[var].mean()
-            st.write(f"**Mean of {var}:** {mean_var:.2f}")
-    numeric_variables()
+            st.write(f"Mean of {var}:{mean_var:.2f}")
+    numeric_varaibles()
 
-    # Categorical Summary
-    st.subheader("🔠 Non-Numeric Variable Frequency Table")
-    def non_numeric_variables():
-        all_tables = []
+    non_numeric_variable_list = dataset.select_dtypes(include = ['object', 'string', 'category']).columns
+    def non_numeric_vaiables():
+        all_tables = []  # list to collect tables
         for var in non_numeric_variable_list:
-            frequency_table = dataset[var].value_counts(dropna=False).reset_index()
-            frequency_table.columns = ['Category', 'Frequency']
-            frequency_table['Percentage'] = (frequency_table['Frequency'] / frequency_table['Frequency'].sum()) * 100
-            frequency_table['Percentage'] = frequency_table['Percentage'].round(2)
+            frequency_table = dataset[var].value_counts().reset_index()
+            frequency_table.columns = ['Category','Frequency']
+            frequency_table['Percentage'] = (frequency_table['Frequency']/frequency_table['Frequency'].sum())*100
             frequency_table['Variable'] = var
             frequency_table = frequency_table[['Variable', 'Category', 'Frequency', 'Percentage']]
-            all_tables.append(frequency_table)
-
+            all_tables.append(frequency_table) #Tables appended
+            
+            # Combine all into one DataFrame
         combined_table = pd.concat(all_tables, ignore_index=True)
         st.dataframe(combined_table)
+            
+    non_numeric_vaiables()
 
-    non_numeric_variables()
+        
 
 else:
-    st.warning("⚠️ Please upload an Excel file to proceed.")
+    st.warning('Ensure that a dataset is uploaded')
