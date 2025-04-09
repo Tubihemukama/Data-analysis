@@ -2,6 +2,14 @@ import streamlit as st
 import pandas as pd
 from io import BytesIO
 
+
+# Set page configuration FIRST
+st.set_page_config(
+    page_title="My App",
+    page_icon="🧠",
+    layout="wide"
+)
+
 upload = st.file_uploader('Upload an Excel File', type=['xlsx'])
 
 if upload is not None:
