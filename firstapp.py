@@ -1,23 +1,6 @@
-
-
 import streamlit as st
 import pandas as pd
 from io import BytesIO
-
-
-# Set page configuration FIRST
-st.set_page_config(
-    page_title="data-analysis-help",
-    page_icon="🧠",
-    layout="wide"
-)
-
-
-
-
-
-st.title("📊 Excel Data Analyzer")
-
 
 upload = st.file_uploader('Upload an Excel File', type=['xlsx'])
 
@@ -59,4 +42,3 @@ if upload is not None:
 
 else:
     st.warning('Ensure that a dataset is uploaded')
-
