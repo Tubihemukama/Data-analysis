@@ -7,7 +7,7 @@ from io import BytesIO
 
 # Set page configuration FIRST
 st.set_page_config(
-    page_title="data-help",
+    page_title="data-analysis-help",
     page_icon="🧠",
     layout="wide"
 )
@@ -54,7 +54,9 @@ if upload is not None:
             
     non_numeric_vaiables()
 
+   
         
 
 else:
     st.warning('Ensure that a dataset is uploaded')
+
